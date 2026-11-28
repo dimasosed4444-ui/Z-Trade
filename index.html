@@ -135,7 +135,21 @@ body.disco::after{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events
 .chip.on{background:linear-gradient(135deg,#4d94ff,#7a5cff);border-color:transparent;color:#fff}
 .tile.sel{outline:2px solid #3be596}
 body::before{background:radial-gradient(55% 38% at 8% 4%,rgba(77,148,255,.32),transparent 70%),radial-gradient(50% 36% at 96% 24%,rgba(190,90,255,.26),transparent 70%),radial-gradient(60% 40% at 20% 102%,rgba(45,212,191,.24),transparent 70%),#05060a}
-#cres .btn{white-space:nowrap;font-size:15px;padding:13px 6px}html{-webkit-text-size-adjust:100%}body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input{-webkit-user-select:text;user-select:text}</style></head><body>
+#cres .btn{white-space:nowrap;font-size:15px;padding:13px 6px}.bcs{display:flex;flex-wrap:wrap;gap:6px}.bcs .chip{flex:none;padding:7px 10px;font-size:13px}
+.bl{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-top:1px solid rgba(255,255,255,.1)}
+.bl .btn{flex:none;padding:10px 14px}
+#cs{overflow-x:hidden;overflow-y:auto}
+.bt-rows{width:100%;max-width:420px;margin-top:10px}
+.br{display:flex;align-items:center;gap:8px;margin:8px 0}
+.bs{flex:1;height:84px;border-radius:14px;position:relative;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.bs img{width:68%;height:68%;object-fit:contain}.bs i{position:absolute;bottom:3px;right:7px;font-size:11px;font-style:normal;font-weight:800}
+.bn{width:74px;text-align:center;font-size:11px;color:var(--mut)}
+.bt-tot{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:420px;margin:12px 0;font-size:22px}
+.bub.dg{z-index:5;transform:scale(1.18);filter:drop-shadow(0 8px 18px rgba(80,160,255,.7))}
+.tile.gh{opacity:.92;transform:scale(1.08);box-shadow:0 14px 30px rgba(0,0,0,.6)}
+.tile.ov{outline:2px dashed #3be596}
+.tile,.bub{-webkit-touch-callout:none}
+.tile img,.nft img,.rc img{pointer-events:none;-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}.tile{-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}html{-webkit-text-size-adjust:100%}body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input{-webkit-user-select:text;user-select:text}</style></head><body>
 <header><b>$ Z Trade</b><button id="bal" class="glass" onclick="openEx()"></button></header>
 <div id="bst"></div><main id="v"></main>
 <nav id="nav" class="glass"><div id="tabs">
@@ -158,6 +172,7 @@ const save=()=>{try{localStorage.setItem('zapp1',JSON.stringify(S))}catch(e){}sy
 const f=n=>(+n).toLocaleString('ru',{maximumFractionDigits:2});
 const NF=[["Хоккейная маска",600],["Зомби-мишка",50],["Тёмный мишка",500],["Котики в сердце",150],["Аниме-доска",200],["Огонёк",100],["Шар с пирамидой",450],["Кот в лотке",300],["Глаз",550],["Лампа джинна",230],["Шкатулка с клоуном",340],["Золотая статуэтка",700],["Лягушонок с сердцем",1500],["Синий лягушонок",1550],["Король-пёс",467],["Радиоактивный кот",450],["Череп с цветами",1000,1],["Чёрное сердце",1000,1],["Лягушки-носки",350]].map((a,i)=>({id:i,n:a[0],p:a[1],lim:!!a[2],img:'nft/'+(i+1)+'.webp'}));
 NF.push(...[['Ярик · кадр 1'],['Ярик · кадр 2'],['Ярик · кадр 3'],['Ярик · кадр 4']].map((a,j)=>({id:19+j,n:a[0],p:250,lim:false,only:1,img:'nft/'+(20+j)+'.webp'})));
+NF.push(...[['Утёнок с лягушонком',15000],['Радужный лягушонок',5000],['Блестящий лягушонок',2500],['Тёмный лягушонок',1400],['Двуцветный лягушонок',1600],['Кольцо',700],['Золотой пакет',600],['Синий пакет',450],['Медаль',1000]].map((a,j)=>({id:23+j,n:a[0],p:a[1],lim:false,only:1,img:'nft/'+(24+j)+'.webp'})));
 const th=x=>x.img.replace('nft/','t/');
 const CL={b:{n:'Синий',m:.9,t:'−10% к цене',bg:'radial-gradient(circle at 30% 25%,#7ab8ff,#1f5fe0 72%)'},g:{n:'Зелёный',m:1,t:'цена без изменений',bg:'radial-gradient(circle at 30% 25%,#86eca8,#139a4d 72%)'},k:{n:'Чёрный',m:1.2,t:'+20% к цене',bg:'radial-gradient(circle at 30% 25%,#55555f,#050507 78%)'},y:{n:'Золотой',m:2,t:'+100% к цене',bg:'radial-gradient(circle at 30% 25%,#fff3a8,#e8a600 72%)'}};
 const val=o=>Math.round(NF[o.id].p*CL[o.c].m);
@@ -165,7 +180,10 @@ const CS={b:{p:250,n:'Синий кейс'},g:{p:280,n:'Зелёный кейс'
 m:{p:130,n:'Мини-кейс',only:[1,3,4,5],bg:'linear-gradient(135deg,#8a93a6,#4b6fa8)',d:'дешёвые NFT, фон любой'},
 c:{p:460,n:'Кейс коллекционера',only:[0,2,6,7,8,9,10,11,14,15,18],bg:'linear-gradient(135deg,#a855f7,#4b8bff)',d:'NFT среднего класса, фон любой'},
 r:{p:1300,n:'Королевский кейс',only:[12,13,16,17],bg:'linear-gradient(135deg,#ffc53d,#ff6a3d 60%,#b3263e)',d:'самые дорогие NFT, фон любой'},
-x:{p:560,n:'Хаос-кейс',only:NF.filter(x=>!x.only).map(x=>x.id),bg:'linear-gradient(135deg,#2dd4bf,#ec4899,#f59e0b)',d:'любая NFT, любой фон'}};
+x:{p:560,n:'Хаос-кейс',only:NF.filter(x=>!x.only).map(x=>x.id),bg:'linear-gradient(135deg,#2dd4bf,#ec4899,#f59e0b)',d:'любая NFT, любой фон'},
+f:{p:2600,n:'Кейс лягушат',only:[23,24,25,26,27],inv:1,bg:'linear-gradient(135deg,#22c55e,#a3e635 50%,#f59e0b)',d:'5 редких лягушат, фон любой'},
+t:{p:650,n:'Кейс сокровищ',only:[28,29,30,31],inv:1,bg:'linear-gradient(135deg,#06b6d4,#6366f1)',d:'кольцо, пакеты, медаль'},
+e:{p:1100,n:'Элитный кейс',only:[23,24,25,26,27,28,29,30,31],inv:1,bg:'linear-gradient(135deg,#f43f5e,#a855f7 55%,#3b82f6)',d:'все 9 новых NFT'}};
 const pk=()=>{const r=Math.random()*100;return r<50?0:r<75?1:r<85?2:3};
 function roll(){const r=Math.random()*100,B=boosted();return r<(B?45:65)?'b':r<(B?77:90)?'g':r<(B?91:97.5)?'k':'y'}
 
@@ -223,12 +241,12 @@ async function findU(){
 function showPlayer(u,d){
  plOwn=(Array.isArray(d.own)?d.own:[]).filter(a=>NF[a[0]]&&CL[a[1]]).slice(0,60).map((a,i)=>({uid:i+1,id:a[0],c:a[1]}));
  const W=Math.min(innerWidth,520)-32;
- $('#sr').innerHTML=stageHTML(plOwn,AV.includes(d.ava)?d.ava:'😎',W,340,'openP',1)+`<div class="who"><b>${esc(String(d.nick||'').slice(0,14))}</b><div class="mut">@${esc(u)}</div></div><div class="glass card" style="text-align:center">⭐ капитал ${f(+d.w||0)} · 🔥 ${+d.s||0} · NFT ${plOwn.length}</div><button class="btn go" style="width:100%" onclick="giftSheet('${u}')">🎁 Подарить игроку</button>`}
+ $('#sr').innerHTML=stageHTML(plOwn,AV.includes(d.ava)?d.ava:'😎',W,340,'openP',1)+`<div class="who"><b>${esc(String(d.nick||'').slice(0,14))}</b><div class="mut">@${esc(u)}</div></div><div class="glass card" style="text-align:center">⭐ капитал ${f(+d.w||0)} · 🔥 ${+d.s||0} · NFT ${plOwn.length}</div><button class="btn go" style="width:100%" onclick="giftSheet('${u}')">🎁 Подарить игроку</button><button class="btn" style="width:100%;margin-top:8px" onclick="bSheet('${u}')">⚔️ Вызвать на батл</button>`}
 function openP(u){const o=plOwn.find(z=>z.uid==u);if(!o)return;const x=NF[o.id];
  sheet(`<div class="pv" style="background:${CL[o.c].bg}"><img src="${x.img}"></div><b style="font-size:20px">${x.n}</b><div class="mut" style="margin:4px 0 12px">Фон: <b style="color:var(--tx)">${CL[o.c].n}</b> (${CL[o.c].t}) · цена ⭐ ${f(val(o))}</div><button class="btn" style="width:100%" onclick="closeSh()">Закрыть</button>`)}
 function stageHTML(own,ava,W,H,fn,intro,av){
- const pts=place(own.slice(0,28),W,H);
- return `<div class="stage ${intro?'in':''}" id="stg" style="height:${H}px"><div class="ava glass" ${av?`onclick="${av}"`:''}>${ava}</div>${pts.map(p=>{const r=p.r;return `<div class="bub" onclick="${fn}(${p.o.uid})" style="width:${p.s}px;height:${p.s}px;left:${p.x-p.s/2}px;top:${p.y-p.s/2}px;--dx:${Math.round((r()-.5)*26)}px;--dy:${Math.round((r()-.5)*30)}px;animation-duration:${(4+r()*3).toFixed(1)}s;animation-delay:-${(r()*5).toFixed(1)}s"><img src="${th(NF[p.o.id])}" decoding="async"></div>`}).join('')}</div>`}
+ const pts=place(own.slice(0,28),W,H,fn=='openN');
+ return `<div class="stage ${intro?'in':''}" id="stg" style="height:${H}px"><div class="ava glass" ${av?`onclick="${av}"`:''}>${ava}</div>${pts.map(p=>{const r=p.r;return `<div class="bub" data-u="${p.o.uid}" onclick="if(Date.now()-dgT>300)${fn}(${p.o.uid})" style="width:${p.s}px;height:${p.s}px;left:${p.x-p.s/2}px;top:${p.y-p.s/2}px;--dx:${Math.round((r()-.5)*26)}px;--dy:${Math.round((r()-.5)*30)}px;animation-duration:${(4+r()*3).toFixed(1)}s;animation-delay:-${(r()*5).toFixed(1)}s"><img src="${th(NF[p.o.id])}" decoding="async"></div>`}).join('')}</div>`}
 /* ---- ежедневный огонёк ---- */
 const dkey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const dd=n=>n%10==1&&n%100!=11?'день':[2,3,4].includes(n%10)&&![12,13,14].includes(n%100)?'дня':'дней';
@@ -247,11 +265,27 @@ const minerHTML=()=>`<div class="glass card" style="text-align:center"><b>Шах
 function odds(){const ex=boosted()?.75:1,w=NF.map(x=>x.only||(x.lim&&!S.stock[x.id])?0:1/Math.pow(x.p,ex)),t=w.reduce((a,b)=>a+b,0);return w.map(v=>v/t)}
 const TIER=p=>p<150?'#8a93a6':p<300?'#4b8bff':p<600?'#a855f7':p<1000?'#ff4d5e':'#ffc53d';
 const cbg=k=>CS[k].bg||CL[k].bg;
-function pw(k){const o=CS[k].only;return NF.map(x=>!o.includes(x.id)||(x.lim&&!S.stock[x.id])?0:Math.pow(x.p,boosted()?.35:0))}
-function openCase(k){const cs=CS[k];if(S.st<cs.p)return toast('Не хватает ⭐');let i,c;
- if(cs.only){const w=pw(k),t=w.reduce((a,b)=>a+b,0);if(!t)return toast('Лимит закончился');let r=Math.random()*t;for(i=0;i<w.length-1;i++){r-=w[i];if(r<0)break}c=roll()}
+function pw(k){const o=CS[k].only;return NF.map(x=>!o.includes(x.id)||(x.lim&&!S.stock[x.id])?0:Math.pow(x.p,CS[k].inv?-(boosted()?.7:1):(boosted()?.35:0)))}
+function pick(k){const cs=CS[k];let i,c;
+ if(cs.only){const w=pw(k);if(w[23]>0){w[23]=0;if(Math.random()<.001)return [23,roll()]}const t=w.reduce((a,b)=>a+b,0);if(!t)return null;let r=Math.random()*t;for(i=0;i<w.length-1;i++){r-=w[i];if(r<0)break}c=roll()}
  else{const pr=odds();let r=Math.random();for(i=0;i<pr.length-1;i++){r-=pr[i];if(r<0)break}c=k}
- const x=NF[i],u=++S.uid;S.st-=cs.p;if(x.lim)S.stock[i]--;S.own.push({uid:u,id:i,c});save();updBal();caseAnim(x,c,k,u)}
+ return [i,c]}
+function cntSheet(k){sheet(`<b>${CS[k].n}</b><div class="mut" style="margin:4px 0 12px">Сколько кейсов открыть сразу?</div><div class="g3">${[1,2,3,4,5].map(n=>`<button class="btn${S.st>=CS[k].p*n?' go':''}" onclick="closeSh();openCase('${k}',${n})">×${n}<br><small>⭐ ${f(CS[k].p*n)}</small></button>`).join('')}</div><button class="btn" style="width:100%;margin-top:10px" onclick="closeSh()">Отмена</button>`)}
+function openCase(k,n){n=n||1;const cs=CS[k];if(S.st<cs.p*n)return toast('Не хватает ⭐');
+ const got=[];for(let j=0;j<n;j++){const d=pick(k);if(!d)break;if(NF[d[0]].lim)S.stock[d[0]]--;got.push({uid:++S.uid,id:d[0],c:d[1]})}
+ if(!got.length)return toast('Лимит закончился');
+ S.st-=cs.p*got.length;got.forEach(o=>S.own.push(o));save();updBal();
+ if(got.length==1)caseAnim(NF[got[0].id],got[0].c,k,got[0].uid);else multiRes(got,k)}
+function reelCards(x,c,k){const cs=CS[k],pool=cs.only?cs.only.map(i=>NF[i]):NF.filter(n=>!n.only),ks=['b','g','k','y'],N=46,WI=34+Math.floor(Math.random()*6),a=[];
+ for(let i=0;i<N;i++){const it=i==WI?x:pool[Math.floor(Math.random()*pool.length)],cc=i==WI?c:(cs.only?ks[Math.floor(Math.random()*4)]:c);a.push(`<div class="rc" style="background:${CL[cc].bg}"><img src="${th(it)}"><s style="background:${TIER(it.p)}"></s></div>`)}
+ return{h:a.join(''),WI,N}}
+function multiRes(got,k){const o=$('#cs');o.classList.add('on');const tot=got.reduce((a,x)=>a+val(x),0),U=100,rs=got.map(g=>reelCards(NF[g.id],g.c,k));
+ o.innerHTML=`<div class="cs-t"><b>Открытие кейсов</b><span>${CS[k].n} ×${got.length}</span></div><div class="crate" id="crate" style="background:${cbg(k)}">📦</div><div id="mr" style="width:100%;margin-top:14px;display:none">${rs.map((r,i)=>`<div class="reel" style="height:118px;margin-bottom:6px"><div class="strip" id="st${i}" style="width:${r.N*U}px">${r.h}</div><i class="mk"></i></div>`).join('')}</div><div id="cres"></div>`;
+ setTimeout(()=>{$('#crate').style.display='none';const mr=$('#mr');mr.style.display='block';
+  rs.forEach((r,i)=>{const st=$('#st'+i);st.style.transform='translateX(0)';st.getBoundingClientRect();st.style.transition='transform 6.4s cubic-bezier(.1,.78,.14,1)';st.style.transform=`translateX(${-(r.WI*U+U/2+(Math.random()-.5)*60)+mr.clientWidth/2}px)`});
+  setTimeout(()=>{rs.forEach((r,i)=>$('#st'+i).children[r.WI].classList.add('hit'));
+   setTimeout(()=>{mr.style.display='none';$('#cres').innerHTML=`<div class="rv" style="max-height:80vh;overflow-y:auto"><div class="g3">${got.map(x=>`<div class="tile" style="cursor:default"><img src="${th(NF[x.id])}" style="background:${CL[x.c].bg}"><div>${NF[x.id].n}</div><div>⭐ ${f(val(x))}</div></div>`).join('')}</div><div class="rt" style="margin:12px 0">Всего: ⭐ ${f(tot)}</div><div class="row"><button class="btn go" onclick="$('#cs').classList.remove('on');go('p',1)">В профиль</button><button class="btn" onclick="$('#cs').classList.remove('on');sellMany([${got.map(x=>x.uid)}])">Продать всё ⭐ ${f(tot)}</button></div></div>`},900)},6600)},1000)}
+function sellMany(us){let t=0;us.forEach(u=>{const i=S.own.findIndex(z=>z.uid==u);if(i<0)return;const o=S.own[i];t+=val(o);if(NF[o.id].lim)S.stock[o.id]=(S.stock[o.id]||0)+1;S.own.splice(i,1)});S.st+=t;save();render();toast('Продано +⭐ '+f(t))}
 function caseAnim(x,c,k,u){
  const cs=CS[k],pool=cs.only?cs.only.map(i=>NF[i]):NF.filter(n=>!n.only),ks=['b','g','k','y'],N=46,WI=34+Math.floor(Math.random()*6),U=100,cards=[];
  for(let i=0;i<N;i++){const it=i==WI?x:pool[Math.floor(Math.random()*pool.length)],cc=i==WI?c:(cs.only?ks[Math.floor(Math.random()*4)]:c);
@@ -264,9 +298,9 @@ function caseAnim(x,c,k,u){
   st.style.transform='translateX(0)';st.getBoundingClientRect();st.style.transition='transform 6.4s cubic-bezier(.1,.78,.14,1)';st.style.transform=`translateX(${tx}px)`;
   setTimeout(()=>{st.children[WI].classList.add('hit');setTimeout(result,900)},6600)},1300);
 }
-function caseInfo(k){const o=CS[k].only,pr=o?(()=>{const w=pw(k),t=w.reduce((a,b)=>a+b,0);return w.map(v=>t?v/t:0)})():odds();
+function caseInfo(k){const o=CS[k].only,pr=o?(()=>{const w=pw(k),h=w[23]>0;if(h)w[23]=0;const t=w.reduce((a,b)=>a+b,0);return w.map((v,i)=>i==23&&h?.001:(t?v/t*(h?.999:1):0))})():odds();
  sheet(`<b>${CS[k].n}: что внутри</b><div class="mut" style="margin:2px 0 10px">${o?'Фон каждой NFT выпадает случайно':'Чем дороже NFT, тем реже она выпадает'}</div><div class="g3">${NF.map((x,i)=>pr[i]>0?`<div class="tile" style="cursor:default"><img src="${th(x)}" style="background:${o?'#2a2d3a':CL[k].bg}"><div>${(pr[i]*100).toFixed(1)}%</div></div>`:'').join('')}</div><button class="btn" style="width:100%;margin-top:12px" onclick="closeSh()">Закрыть</button>`)}
-const casesHTML=()=>`<div class="mut" style="margin-bottom:10px">Шансы смотри в «Что внутри» до открытия. После выпадения NFT можно сразу продать.</div><div class="g2c">${Object.keys(CS).map(k=>`<div class="case" style="background:${cbg(k)}${k=='j'?';grid-column:1/-1':''}"><b style="font-size:17px">${CS[k].n}</b><div class="mut2">${CS[k].only?CS[k].d:'все NFT, фон: '+CL[k].n+', '+CL[k].t}</div><button class="btn go" onclick="openCase('${k}')">Открыть · ⭐ ${CS[k].p}</button><button class="lnk" style="color:#fff" onclick="caseInfo('${k}')">Что внутри</button></div>`).join('')}</div>`;
+const casesHTML=()=>`<div class="mut" style="margin-bottom:10px">Шансы смотри в «Что внутри» до открытия. После выпадения NFT можно сразу продать.</div><div class="g2c">${Object.keys(CS).map(k=>`<div class="case" style="background:${cbg(k)}${k=='j'?';grid-column:1/-1':''}"><b style="font-size:17px">${CS[k].n}</b><div class="mut2">${CS[k].only?CS[k].d:'все NFT, фон: '+CL[k].n+', '+CL[k].t}</div><button class="btn go" onclick="cntSheet('${k}')">Открыть · ⭐ ${CS[k].p}</button><button class="lnk" style="color:#fff" onclick="caseInfo('${k}')">Что внутри</button></div>`).join('')}</div>`;
 const nftHTML=()=>`<div class="mut" style="margin-bottom:10px">Фон NFT выпадает при покупке и меняет цену: 🔵 −10% · 🟢 0% · ⚫ +20% · 🟡 +100%</div><div class="grid">${NF.filter(x=>!x.only).map(x=>{const l=S.stock[x.id];return `<div class="nft glass"><i class="tr" style="background:${TIER(x.p)}"></i><img class="im" src="${x.img}"><b style="font-size:14px">${x.n}</b>${x.lim?`<small style="color:var(--gold)">Лимит · осталось ${l}</small>`:'<small>NFT</small>'}<button class="btn go" style="width:100%;margin-top:8px;padding:9px;${x.lim&&!l?'opacity:.4':''}" onclick="buy(${x.id})">⭐ ${f(x.p)}</button></div>`}).join('')}</div>`;
 const wheelHTML=()=>`<div class="glass card"><b>Колесо удачи</b><div class="wrap"><div class="ptr"></div><div id="wh" style="transform:rotate(${rot}deg);background:conic-gradient(#ff5560 0 180deg,#23232b 180deg 270deg,#fff 270deg 306deg,#5b5f6b 306deg 360deg)"></div></div><div class="mut" style="text-align:center">🔴 50% ×1,25 · ⚫ 25% ×2 · ⚪ 10% ×5 · серый 15% — пусто</div>${chips()}${amtBox()}<div class="row"><button class="cb" style="background:#ff5560" onclick="spin(0)">Красный ×1,25</button><button class="cb" style="background:#23232b" onclick="spin(1)">Чёрный ×2</button><button class="cb" style="background:#fff;color:#000" onclick="spin(2)">Белый ×5</button></div></div>`;
 /* ---- подарки между игроками (через общий сервер) ---- */
@@ -290,35 +324,129 @@ async function giftSend(){
   const r=await fetch(DBU()+'/inbox/'+to+'.json',{method:'POST',body:JSON.stringify(it)});if(!r.ok)throw 0;
   gf.uid=0;closeSh();render();toast('Подарок отправлен @'+to)}
  catch(_){undo();save();updBal();toast('Не удалось отправить')}}
+/* ---- входящие подарки и вызовы ---- */
 async function pullInbox(){
  if(pulling||!S.user||!DBU())return;pulling=1;
- try{const d=await dbGet('inbox/'+S.user);if(d){const got=[];
+ try{const d=await dbGet('inbox/'+S.user);if(d){const got=[];let inv=0;
   for(const [key,it] of Object.entries(d)){
    if(!it||typeof it!='object')continue;
    const r=await fetch(DBU()+'/inbox/'+S.user+'/'+key+'.json',{method:'DELETE'});if(!r.ok)continue;
    const from=' · от @'+String(it.from||'?').slice(0,16);
    if(it.t=='n'&&NF[it.id]&&CL[it.c]){S.own.push({uid:++S.uid,id:it.id,c:it.c});got.push(NF[it.id].n+' ('+CL[it.c].n+')'+from)}
-   else if(it.t=='c'&&KM[it.k]&&+it.a>0&&+it.a<=1e9){S[it.k]+=+it.a;got.push(f(+it.a)+' '+KM[it.k].s+from)}}
-  if(got.length){save();updBal();render();const m=got.map(esc).join('<br>');
-   if($('#sh').classList.contains('on'))toast('🎁 Тебе прислали подарок');else sheet(`<div class="val">🎁</div><b style="display:block;text-align:center">Тебе прислали подарки</b><div class="mut" style="margin:6px 0 12px;text-align:center">${m}</div><button class="btn go" style="width:100%" onclick="closeSh()">Спасибо!</button>`)}}}
+   else if(it.t=='c'&&KM[it.k]&&+it.a>0&&+it.a<=1e9){S[it.k]+=+it.a;got.push(f(+it.a)+' '+KM[it.k].s+from)}
+   else if(it.t=='b'&&/^[a-z0-9]{6,20}$/.test(it.id)&&!S.bt.some(z=>z.id==it.id)){const e={id:it.id,r:'b',o:String(it.from||'').slice(0,16),s:'inv'};S.bt.unshift(e);inv=1;
+    dbGet('battles/'+it.id).then(b=>{if(b&&b.b===S.user){e.cs=(b.cs||[]).filter(k=>CS[k]).slice(0,5);e.p=e.cs.reduce((a,k)=>a+CS[k].p,0);save();if(tab=='u')render()}}).catch(()=>{})}}
+  if(got.length||inv){save();updBal();render();
+   if(inv)toast('⚔️ Тебя вызвали на батл (вкладка «Игроки»)');
+   if(got.length){const m=got.map(esc).join('<br>');
+    if($('#sh').classList.contains('on'))toast('🎁 Тебе прислали подарок');else sheet(`<div class="val">🎁</div><b style="display:block;text-align:center">Тебе прислали подарки</b><div class="mut" style="margin:6px 0 12px;text-align:center">${m}</div><button class="btn go" style="width:100%" onclick="closeSh()">Спасибо!</button>`)}}}}
  catch(_){}pulling=0}
+/* ---- батлы кейсов ---- */
+S.bt=S.bt||[];S.pos=S.pos||{};
+let bcx={u:'',cs:[]},polling=0,dgT=0,cd=null;
+function hs(t){let h=1779033703^t.length;for(let i=0;i<t.length;i++){h=Math.imul(h^t.charCodeAt(i),3432918353);h=h<<13|h>>>19}h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return(h^h>>>16)>>>0}
+function rngS(t){let a=hs(t);return()=>{a=a+0x6D2B79F5|0;let x=Math.imul(a^a>>>15,1|a);x=x+Math.imul(x^x>>>7,61|x)^x;return((x^x>>>14)>>>0)/4294967296}}
+function bdrop(seed,k){const r=rngS(seed),cs=CS[k];let id,c;
+ if(cs.only){if(cs.inv){const hit=cs.only.includes(23)&&r()<.001,ids=cs.only.filter(i=>i!=23),w=ids.map(i=>1/NF[i].p),t=w.reduce((a,b)=>a+b,0);let q=r()*t,j=0;for(;j<w.length-1;j++){q-=w[j];if(q<0)break}id=hit?23:ids[j]}else id=cs.only[Math.floor(r()*cs.only.length)];const q=r()*100;c=q<65?'b':q<90?'g':q<97.5?'k':'y'}
+ else{const ids=NF.filter(x=>!x.only),w=ids.map(x=>1/x.p),t=w.reduce((a,b)=>a+b,0);let q=r()*t,j=0;for(;j<w.length-1;j++){q-=w[j];if(q<0)break}id=ids[j].id;c=k}
+ return{id,c,v:Math.round(NF[id].p*CL[c].m)}}
+const bsum=cs=>cs.reduce((a,k)=>a+CS[k].p,0);
+function bSheet(u){
+ if(u!=null)bcx.u=u;if(!DBU())return toast('Сервер игроков не подключён');if(!S.user)return toast('Сначала задай юзернейм в профиле');
+ sheet(`<b>⚔️ Батл кейсов</b><div class="mut" style="margin:4px 0 8px">Вы оба открываете одни и те же кейсы (каждый платит сам). У кого дроп дороже, тот забирает все NFT из батла.</div><input id="bu" placeholder="@юзернейм соперника" autocapitalize="none" autocomplete="off" value="${esc(bcx.u)}" oninput="bcx.u=this.value"><div class="mut" style="margin:10px 0 6px">Добавь кейсы (до 5):</div><div class="bcs">${Object.keys(CS).map(k=>`<button class="chip" onclick="if(bcx.cs.length<5)bcx.cs.push('${k}');bSheet()">${CS[k].n} · ${CS[k].p}</button>`).join('')}</div><div class="mut" style="margin:8px 0">${bcx.cs.length?bcx.cs.map((k,i)=>`<button class="lnk" onclick="bcx.cs.splice(${i},1);bSheet()">${CS[k].n} ✕</button>`).join(' '):'Пока ничего не выбрано'}</div><div class="row"><button class="btn" onclick="closeSh()">Отмена</button><button class="btn go" onclick="bSend()">Вызвать · ⭐ ${bsum(bcx.cs)}</button></div>`)}
+async function bSend(){
+ const to=bcx.u.trim().replace(/^@/,'').toLowerCase(),tot=bsum(bcx.cs);
+ if(!/^[a-z0-9_]{4,16}$/.test(to))return toast('Укажи юзернейм соперника');if(to==S.user)return toast('Нельзя вызвать себя');if(!bcx.cs.length)return toast('Выбери кейсы');if(S.st<tot)return toast('Не хватает ⭐');
+ const id=Date.now().toString(36)+Math.random().toString(36).slice(2,7);S.st-=tot;save();updBal();
+ try{if(!await dbGet('u/'+to))throw 1;await dbPut('battles/'+id,{a:S.user,b:to,cs:bcx.cs,st:'wait',t:Date.now()});
+  const r=await fetch(DBU()+'/inbox/'+to+'.json',{method:'POST',body:JSON.stringify({t:'b',id,from:S.user})});if(!r.ok)throw 0;
+  S.bt.unshift({id,r:'a',o:to,cs:bcx.cs.slice(),p:tot,s:'wait'});bcx.cs=[];save();closeSh();render();toast('Вызов отправлен @'+to)}
+ catch(e){S.st+=tot;save();updBal();toast(e===1?'Игрок не найден':'Не удалось отправить вызов')}}
+async function bAccept(id){
+ const e=S.bt.find(z=>z.id==id);if(!e)return;let d;
+ try{d=await dbGet('battles/'+id)}catch(_){return toast('Нет связи с сервером')}
+ if(!d||d.st!='wait'||d.b!==S.user||d.a!==e.o){e.s='void';save();render();return toast('Вызов уже недействителен')}
+ const cs=(d.cs||[]).filter(k=>CS[k]).slice(0,5),tot=bsum(cs);
+ if(!cs.length)return;if(S.st<tot)return toast('Нужно ⭐ '+f(tot));
+ S.st-=tot;save();updBal();
+ try{await dbPut('battles/'+id,{...d,cs,st:'live',nb:Math.random().toString(36).slice(2,10)});e.cs=cs;e.p=tot;e.s='live';save();render();battleRun(id)}
+ catch(_){S.st+=tot;save();updBal();toast('Не удалось принять')}}
+async function bDecline(id){const e=S.bt.find(z=>z.id==id);if(!e)return;e.s='void';save();render();try{await dbPut('battles/'+id+'/st','decl')}catch(_){}}
+async function bCancel(id){const e=S.bt.find(z=>z.id==id);if(!e||e.s!='wait')return;
+ try{const d=await dbGet('battles/'+id);if(d&&d.st=='wait'){await dbPut('battles/'+id+'/st','cancel');S.st+=e.p;e.s='void';save();updBal();render();toast('Вызов отменён, ⭐ возвращены')}else{e.s='live';save();render();toast('Соперник уже принял вызов')}}catch(_){toast('Нет связи с сервером')}}
+async function pollBattles(){
+ if(polling||!S.user||!DBU())return;polling=1;let ch=0;
+ for(const e of S.bt){
+  try{if(e.r=='a'&&e.s=='wait'){const d=await dbGet('battles/'+e.id);if(!d)continue;
+    if(e.s!='wait')continue;
+    if(d.st=='live'||d.st=='done'){e.s='live';ch=1;toast('⚔️ @'+e.o+' принял батл!')}
+    else if(d.st=='decl'||d.st=='cancel'){e.s='void';S.st+=e.p;ch=1;toast('Батл отменён, ⭐ возвращены')}
+    else if(Date.now()-d.t>864e5){e.s='void';await dbPut('battles/'+e.id+'/st','cancel');S.st+=e.p;ch=1;toast('Вызов просрочен, ⭐ возвращены')}}
+   else if(e.r=='b'&&e.s=='inv'){const d=await dbGet('battles/'+e.id);if(!d||d.st!='wait'){e.s='void';ch=1}}}catch(_){}}
+ if(ch){save();updBal();if(tab=='u')render()}polling=0}
+async function battleRun(id){
+ const e=S.bt.find(z=>z.id==id);if(!e)return;let d;
+ try{d=await dbGet('battles/'+id)}catch(_){return toast('Нет связи с сервером')}
+ if(!d||!d.nb||!['live','done'].includes(d.st))return toast('Батл ещё не начался');
+ const cs=(d.cs||[]).filter(k=>CS[k]).slice(0,5),A=cs.map((k,i)=>bdrop(id+'|'+d.nb+'|a|'+i,k)),B=cs.map((k,i)=>bdrop(id+'|'+d.nb+'|b|'+i,k)),
+  ta=A.reduce((a,x)=>a+x.v,0),tb=B.reduce((a,x)=>a+x.v,0),me=S.user==d.a?'a':'b',w=ta==tb?'d':ta>tb?'a':'b',first=e.s!='done';
+ const o=$('#cs');o.classList.add('on');
+ o.innerHTML=`<div class="cs-t"><b>⚔️ Батл кейсов</b><span>@${esc(d.a)} против @${esc(d.b)}</span></div><div class="bt-rows">${cs.map((k,i)=>`<div class="br"><div class="bs" id="x${i}a"></div><div class="bn">${esc(CS[k].n)}</div><div class="bs" id="x${i}b"></div></div>`).join('')}</div><div class="bt-tot"><b id="tA">0</b><span class="mut">сумма ⭐</span><b id="tB">0</b></div><div id="cres"></div>`;
+ let i=0,sa=0,sb=0;
+ const show=(el,x)=>{el.style.background=CL[x.c].bg;el.innerHTML=`<img src="${th(NF[x.id])}"><i>⭐ ${f(x.v)}</i>`};
+ function round(){if(i>=cs.length)return fin();const a=$('#x'+i+'a'),b=$('#x'+i+'b');let n=0;
+  const iv=setInterval(()=>{[a,b].forEach(el=>{el.innerHTML=`<img src="${th(NF[Math.floor(Math.random()*NF.length)])}">`;el.style.background='#222'});
+   if(++n>14){clearInterval(iv);show(a,A[i]);show(b,B[i]);sa+=A[i].v;sb+=B[i].v;$('#tA').textContent=f(sa);$('#tB').textContent=f(sb);i++;setTimeout(round,700)}},90)}
+ function fin(){const win=w==me,draw=w=='d',mine=me=='a'?A:B,got=draw?mine:win?[...A,...B]:[];
+  if(first){got.forEach(x=>S.own.push({uid:++S.uid,id:x.id,c:x.c}));e.s='done';e.w=draw?'draw':win?'win':'lose';e.ta=ta;e.tb=tb;save();updBal();if(win)dbPut('battles/'+id+'/st','done').catch(()=>{})}
+  $('#cres').innerHTML=`<div class="rv"><b class="rn">${draw?'🤝 Ничья':win?'🏆 Победа!':'💥 Поражение'}</b><div class="mut" style="margin:6px 0">${draw?'Каждый забирает свои NFT':win?'Ты забираешь все NFT: '+(A.length+B.length)+' шт.':'Ты ничего не получаешь'}</div><button class="btn go" style="width:100%;margin-top:12px" onclick="$('#cs').classList.remove('on');render()">${win||draw?'Отлично':'Закрыть'}</button></div>`}
+ setTimeout(round,500)}
+function battlesHTML(){
+ const nm=b=>(b.cs||[]).map(k=>CS[k]?CS[k].n:'?').join(', ');
+ const ln=b=>{const nd=b.s=='inv'?`<div><b>@${esc(b.o)}</b> вызывает тебя<div class="mut">${b.cs?esc(nm(b))+' · ⭐ '+f(b.p):'загружаем…'}</div></div><div class="row" style="margin:0"><button class="btn go" onclick="bAccept('${b.id}')">Принять</button><button class="btn" onclick="bDecline('${b.id}')">✕</button></div>`
+  :b.s=='wait'?`<div>Вызов @${esc(b.o)}<div class="mut">Ждём ответа · ⭐ ${f(b.p)}</div></div><button class="btn" onclick="bCancel('${b.id}')">Отменить</button>`
+  :b.s=='live'?`<div>Батл с @${esc(b.o)}<div class="mut">Соперник принял, результат готов</div></div><button class="btn go" onclick="battleRun('${b.id}')">Смотреть</button>`
+  :b.s=='done'?`<div>Батл с @${esc(b.o)}<div class="mut">${b.w=='win'?'🏆 Победа':b.w=='lose'?'💥 Поражение':'🤝 Ничья'} · ${f(b.ta||0)} : ${f(b.tb||0)}</div></div><button class="btn" onclick="battleRun('${b.id}')">Повтор</button>`
+  :`<div>Вызов @${esc(b.o)}<div class="mut">Отменён</div></div>`;return `<div class="bl">${nd}</div>`};
+ return `<div class="glass card" style="margin-top:12px"><b>⚔️ Батлы</b><div class="mut" style="margin:2px 0 8px">Вызови игрока и открывайте одни кейсы: у кого дроп дороже, тот забирает всё.</div>${S.bt.slice(0,8).map(ln).join('')}<button class="btn go" style="width:100%;margin-top:10px" onclick="bSheet('')">Новый батл</button></div>`}
+/* ---- перетаскивание NFT ---- */
+function stageDrag(){
+ const st=$('#stg');if(!st)return;let d=null;
+ st.addEventListener('pointerdown',e=>{const b=e.target.closest('.bub');if(!b)return;d={b,x:e.clientX,y:e.clientY,on:0};
+  d.t=setTimeout(()=>{d.on=1;b.classList.add('dg');b.style.animationPlayState='paused';try{b.setPointerCapture(e.pointerId)}catch(_){}},260)});
+ st.addEventListener('touchmove',e=>{if(d&&d.on)e.preventDefault()},{passive:false});
+ st.addEventListener('pointermove',e=>{if(!d)return;if(!d.on){if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>8){clearTimeout(d.t);d=null}return}
+  const r=st.getBoundingClientRect(),s=d.b.offsetWidth;d.b.style.left=Math.max(0,Math.min(r.width-s,e.clientX-r.left-s/2))+'px';d.b.style.top=Math.max(0,Math.min(r.height-s,e.clientY-r.top-s/2))+'px'});
+ const end=()=>{if(!d)return;clearTimeout(d.t);if(d.on){const r=st.getBoundingClientRect(),b=d.b,s=b.offsetWidth;S.pos[b.dataset.u]=[(parseFloat(b.style.left)+s/2)/r.width,(parseFloat(b.style.top)+s/2)/r.height];save();b.classList.remove('dg');b.style.animationPlayState='';dgT=Date.now()}d=null};
+ st.addEventListener('pointerup',end);st.addEventListener('pointercancel',end)}
+function colDrag(){
+ const g=$('#col');if(!g)return;
+ g.addEventListener('pointerdown',e=>{const t=e.target.closest('.tile');if(!t)return;cd={t,x:e.clientX,y:e.clientY,on:0};
+  cd.tm=setTimeout(()=>{cd.on=1;const c=t.cloneNode(true);c.className='tile gh';c.style.cssText=`position:fixed;width:${t.offsetWidth}px;left:${e.clientX-t.offsetWidth/2}px;top:${e.clientY-t.offsetHeight/2}px;pointer-events:none;z-index:70`;document.body.appendChild(c);cd.c=c;t.style.opacity=.3;if(navigator.vibrate)navigator.vibrate(15)},300)});
+ g.addEventListener('touchmove',e=>{if(cd&&cd.on)e.preventDefault()},{passive:false})}
+addEventListener('pointermove',e=>{if(!cd)return;if(!cd.on){if(Math.hypot(e.clientX-cd.x,e.clientY-cd.y)>8){clearTimeout(cd.tm);cd=null}return}
+ cd.c.style.left=e.clientX-cd.c.offsetWidth/2+'px';cd.c.style.top=e.clientY-cd.c.offsetHeight/2+'px';
+ const o=document.elementFromPoint(e.clientX,e.clientY),h=o&&o.closest&&o.closest('.tile[data-u]');document.querySelectorAll('.tile.ov').forEach(z=>z.classList.remove('ov'));if(h&&h!==cd.t)h.classList.add('ov')});
+const endCd=e=>{if(!cd)return;clearTimeout(cd.tm);if(cd.on){dgT=Date.now();cd.c.remove();const o=document.elementFromPoint(e.clientX,e.clientY),h=o&&o.closest&&o.closest('.tile[data-u]');
+ if(h&&h!==cd.t){const a=S.own.findIndex(z=>z.uid==cd.t.dataset.u),b=S.own.findIndex(z=>z.uid==h.dataset.u);if(a>=0&&b>=0){const m=S.own.splice(a,1)[0];S.own.splice(b,0,m);save()}}render()}cd=null};
+addEventListener('pointerup',endCd);addEventListener('pointercancel',endCd);
 function render(){
  updBal();const v=$('#v');
  if(tab=='p'){
   const W=Math.min(innerWidth,520)-32,n=S.own.length;
-  v.innerHTML=stageHTML(S.own,S.ava,W,400,'openN',introDone,'openAva()')+`<div class="who"><b>${esc(S.nick)}</b><div class="mut">${S.user?'@'+esc(S.user):'юзернейм не задан'}</div><button class="lnk" onclick="editProf()">Изменить ник и юзернейм</button></div>${dailyHTML()}<div class="grid">${K.map(c=>`<div class="glass card" style="margin:0;text-align:center"><div class="mut">${c.n}</div><b style="font-size:22px">${c.s} ${f(S[c.k])}</b></div>`).join('')}</div>${n?`<div style="margin:18px 2px 8px"><b>Коллекция (${n})</b> <span class="mut">· ⭐ ${f(S.own.reduce((a,o)=>a+val(o),0))}</span></div><div class="g3">${S.own.map(o=>`<div class="tile glass" onclick="openN(${o.uid})"><img src="${th(NF[o.id])}" loading="lazy" decoding="async" style="background:${CL[o.c].bg}"><div>⭐ ${f(val(o))}</div></div>`).join('')}</div>`:'<div class="mut" style="text-align:center;margin-top:14px">Купи NFT или открой кейс, и они закружатся вокруг аватара</div>'}`;
-  if(!introDone){introDone=true;requestAnimationFrame(()=>requestAnimationFrame(()=>$('#stg').classList.add('in')))}
+  v.innerHTML=stageHTML(S.own,S.ava,W,400,'openN',introDone,'openAva()')+`<div class="who"><b>${esc(S.nick)}</b><div class="mut">${S.user?'@'+esc(S.user):'юзернейм не задан'}</div><button class="lnk" onclick="editProf()">Изменить ник и юзернейм</button></div>${dailyHTML()}<div class="grid">${K.map(c=>`<div class="glass card" style="margin:0;text-align:center"><div class="mut">${c.n}</div><b style="font-size:22px">${c.s} ${f(S[c.k])}</b></div>`).join('')}</div>${n?`<div style="margin:18px 2px 8px"><b>Коллекция (${n})</b> <span class="mut">· ⭐ ${f(S.own.reduce((a,o)=>a+val(o),0))}</span></div><div class="g3" id="col">${S.own.map(o=>`<div class="tile glass" data-u="${o.uid}" onclick="if(Date.now()-dgT>300)openN(${o.uid})"><img src="${th(NF[o.id])}" loading="lazy" decoding="async" style="background:${CL[o.c].bg}"><div>⭐ ${f(val(o))}</div></div>`).join('')}</div>`:'<div class="mut" style="text-align:center;margin-top:14px">Купи NFT или открой кейс, и они закружатся вокруг аватара</div>'}`;
+  stageDrag();colDrag();if(!introDone){introDone=true;requestAnimationFrame(()=>requestAnimationFrame(()=>$('#stg').classList.add('in')))}
  }else if(tab=='s'){v.innerHTML=seg(sh2,'sh2',[['n','NFT'],['c','Кейсы']])+(sh2=='c'?casesHTML():nftHTML())
  }else if(tab=='w'){v.innerHTML=seg(gm,'gm',[['w','🎡 Колесо'],['m','⛏ Шахта']])+(gm=='m'?minerHTML():wheelHTML());minerUp()
- }else if(tab=='u'){v.innerHTML=`<div class="glass card"><b>Поиск игроков</b><div class="mut" style="margin:2px 0 10px">Введи юзернейм и загляни в чужой профиль</div><input id="sq" placeholder="@username" autocapitalize="none" autocomplete="off"><button class="btn go" style="width:100%;margin-top:8px" onclick="findU()">Найти</button></div><div id="sr"></div>`
+ }else if(tab=='u'){v.innerHTML=`<div class="glass card"><b>Поиск игроков</b><div class="mut" style="margin:2px 0 10px">Введи юзернейм и загляни в чужой профиль</div><input id="sq" placeholder="@username" autocapitalize="none" autocomplete="off"><button class="btn go" style="width:100%;margin-top:8px" onclick="findU()">Найти</button></div><div id="sr"></div>${battlesHTML()}`
  }else{
   if(cg.on){v.innerHTML=`<div class="glass card"><div class="mut" style="text-align:center">Ставка ${f(cg.bet)} ${KM[cg.cur].s}</div><div class="val" id="cv2"></div><canvas id="cv"></canvas><div class="row"><button class="btn go" style="font-size:18px" onclick="cash()">Забрать</button></div></div>`;chartDraw()}
   else v.innerHTML=`<div class="glass card"><b>Рынок</b><div class="mut">Ставь сумму: курс растёт и падает случайно. Забирай прибыль в любой момент, пока он не рухнул в ноль.</div>${chips()}${amtBox()}<div class="row"><button class="btn go" style="font-size:18px" onclick="startChart()">Запустить</button></div></div>`}
 }
 function rng(a){return()=>(a=(a*1664525+1013904223)>>>0)/4294967296}
-function place(list,W,H){const pts=[],cx=W/2,cy=H/2;list.forEach(o=>{const r=rng(o.uid*7919+13),sz=48+Math.floor(r()*18);let p=null;
+function place(list,W,H,mine){const pts=[],cx=W/2,cy=H/2;list.forEach(o=>{const r=rng(o.uid*7919+13),sz=48+Math.floor(r()*18);let p=null;
  for(let t=0;t<80&&!p;t++){const x=sz/2+8+r()*(W-sz-16),y=sz/2+8+r()*(H-sz-16);if(Math.hypot(x-cx,y-cy)<54+sz/2+10)continue;if(pts.some(q=>Math.hypot(x-q.x,y-q.y)<(sz+q.s)/2+4))continue;p={x,y,s:sz}}
- if(!p)p={x:sz/2+8+r()*(W-sz-16),y:sz/2+8+r()*(H-sz-16),s:sz};p.o=o;p.r=r;pts.push(p)});return pts}
+ if(!p)p={x:sz/2+8+r()*(W-sz-16),y:sz/2+8+r()*(H-sz-16),s:sz};const sp=mine&&S.pos[o.uid];if(sp){p.x=sp[0]*W;p.y=sp[1]*H}p.o=o;p.r=r;pts.push(p)});return pts}
 function buy(i){const x=NF[i];if(x.lim&&!S.stock[i])return toast('Лимит закончился');if(S.st<x.p)return toast('Не хватает ⭐');
  S.st-=x.p;if(x.lim)S.stock[i]--;const c=roll(),u=++S.uid;S.own.push({uid:u,id:i,c});save();updBal();rollAnim(x,c,0,u)}
 function rollAnim(x,c,cs,u){
@@ -375,7 +503,7 @@ go('p');
 const bt=()=>{const b=$('#bst'),l=S.boostUntil-Date.now();if(l>0){b.style.display='block';b.textContent='⚡ Шансы повышены · '+Math.floor(l/60000)+':'+String(Math.floor(l/1000)%60).padStart(2,'0')}else b.style.display='none';document.body.classList.toggle('disco',l>0)};
 setInterval(()=>{bt();minerUp()},1000);bt();
 if(!S.v3){S.v3=1;S.adm=0}
-if(!S.v5){S.v5=1;S.v4=1;S.st+=500;S.boostUntil=Date.now()+36e5;save();updBal();bt();sheet(`<div class="val">🎉</div><div class="val" style="font-size:26px;margin:6px 0">Праздник в игре!</div><div class="val" style="font-size:22px;color:var(--gold)">+500 ⭐</div><div class="mut" style="text-align:center;margin:8px 0 12px">Первый час после обновления: выше шансы в колесе, кейсах, фонах NFT и шахте.</div><button class="btn go" style="width:100%" onclick="closeSh()">Играть</button>`)}
-pullInbox();setInterval(pullInbox,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pullInbox()});
+if(!S.v6){S.v6=1;S.v5=1;S.v4=1;S.st+=500;S.boostUntil=Date.now()+36e5;save();updBal();bt();sheet(`<div class="val">🎉</div><div class="val" style="font-size:26px;margin:6px 0">Новое обновление!</div><div class="val" style="font-size:22px;color:var(--gold)">+500 ⭐</div><div class="mut" style="text-align:center;margin:8px 0 12px">Первый час: выше шансы в колесе, кейсах, фонах NFT и шахте (кроме рынка).</div><button class="btn go" style="width:100%" onclick="closeSh()">Играть</button>`)}
+pullInbox();pollBattles();setInterval(pullInbox,30000);setInterval(pollBattles,15000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pullInbox()});
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script></body></html>
